@@ -1,22 +1,11 @@
-# -*- coding: utf-8 -*-
-
-# Run this app with `python app.py` and
-# visit http://127.0.0.1:8050/ in your web browser.
-
-import dash
-import dash_core_components as dcc
-import dash_html_components as html
-from dash.dependencies import Input, Output
+from FiguresClass import Figures
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
-
-# import plotly.express as px
-# import pandas as pd
+import plotly
 import json
 import pickle
 
 from DataFormating import *
-from Plotting import canton_and_bubble
+from Plotting import canton_and_bubble, draw_single_canton
 
 # -* Loads geojsons
 JSON_PATH = './Data/SwissMunicipalities.geojson'
@@ -39,127 +28,87 @@ with open(JSON_PATH, 'r') as j:
 with open('./Data/mapbox_token.txt', 'r') as f:
     mapbox_key = f.read().strip()
 
+swiss_canton_ordering_geojson = pickle.load(open('./Data/geojson_swisscantoon_ordering.p', 'rb'))
+
 # Loads dataframes
-df_bubble = pickle.load(open('./Data/df_city_count.p', 'rb'))
+df_count_city = pickle.load(open('./Data/df_city_count.p', 'rb')).sort_values('municipality')
 df_count_canton = pickle.load(open('./Data/df_canton_count.p', 'rb'))
 df_jobs = pickle.load(open('./Data/df.p', 'rb'))
 
 # --- Plotting
-bar_plot_height = 225
+bar_plot_height = 175
 
 # Swiss border
-fig = make_subplots(rows=4, cols=3, specs=[
-    [{'type': 'mapbox', "rowspan": 4, 'colspan': 2}, None, {'type': 'domain', "rowspan": 2}],
-    [None, None, None], [None, None, {'rowspan': 1}], [None, None, {'rowspan': 1}]],
-                    horizontal_spacing=0.05, vertical_spacing=0.05,
-                    subplot_titles=('','Job Functions', "Top ten canton", "Ton ten cities"))
 fig_map = go.Figure()
 fig_map.add_trace(go.Scattermapbox(name='Switzerland',
-                               lat=df_borders['lat'],
-                               lon=df_borders['lon'],
-                               mode="lines", line=dict(width=1, color="#F00"),
-                               hoverinfo='none', visible=True,
-                               showlegend=False))
+                                   lat=df_borders['lat'],
+                                   lon=df_borders['lon'],
+                                   mode="lines", line=dict(width=1, color="#F00"),
+                                   hoverinfo='none', visible=True,
+                                   showlegend=False))
 
-scale_bubble = 800 / df_bubble['All Jobs'].max()
+scale_bubble = 1 #800 / df_count_city['All Jobs'].max()
 job_function = 'All Jobs'
-fig_bubble, fig_canton = canton_and_bubble(job_function, df_bubble, df_count_canton, scale_bubble, swiss_canton)
+fig_bubble, fig_canton = canton_and_bubble(job_function, df_count_city, df_count_canton, scale_bubble, swiss_canton)
 fig_map.add_traces((fig_bubble, fig_canton))
+# fig_map.update_layout()
 
-fig_map.update_layout(margin={"r": 0, "t": 30, "l": 0, "b": 0},
-                  mapbox_style="light",
-                  mapbox_accesstoken=mapbox_key,
-                  mapbox_zoom=6.75,
-                  mapbox_center={'lat': 46.8181877, 'lon': 8.2275124},
-                  height= 4*bar_plot_height)
+fig_map.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0},
+                      mapbox_style="light",
+                      mapbox_accesstoken=mapbox_key,
+                      mapbox_zoom=6.95,
+                      mapbox_center={'lat': 46.8181877, 'lon': 8.2275124},
+                      height=4 * bar_plot_height)
+fig_map.update_traces(visible=True, selector=dict(type="scattermapbox"))
 
-updatemenus = list([dict(type='buttons', active=0, y=1.05, x=0.11,
-                         buttons=list(
-                             [dict(label='Cities',
-                                   method='update',
-                                   args=[{'visible': [True, True, False]}]),
-                              dict(label='Cantons',
-                                   method='update',
-                                   args=[{'visible': [True, False, True]}]),
-                              dict(label='Both',
-                                   method='update',
-                                   args=[{'visible': [True, True, True]}])]
-                         ),
-                         direction='right')])
-
-fig_map.update_layout(updatemenus=updatemenus)
 
 # Pie chart
 df_job_function = df_jobs[df_jobs.columns[10:]].sum()
-df_job_function = df_job_function.drop('Staffing and Recruiting')
-df_job_function = df_job_function[df_job_function / df_job_function.sum() >= 0.01]
 
+color_min = (200,27,18)
+color_max = (113,15, 11)
+kolors = [plotly.colors.label_rgb(c) for c in plotly.colors.n_colors(color_min, color_max, len(df_jobs.columns[10:]))]
 fig_pie = go.Figure(go.Pie(labels=df_job_function.index,
-                     values=df_job_function,
-                     hovertemplate='%{label}<br>%{value} jobs - %{percent}<extra></extra>',
-                     showlegend=False, textposition='inside'),
-                    layout={'margin':{"r": 0, "t": 0, "l": 0, "b": 0}, 'height': 2*bar_plot_height})
+                           values=df_job_function,
+                           marker={'colors': kolors},
+                           hovertemplate='%{label}<br>%{value} jobs - %{percent}<extra></extra>',
+                           showlegend=False, textposition='inside',
+                           textinfo='label',
+                           insidetextorientation='radial'),
+                           layout={'margin': {"r": 0, "t": 0, "l": 0, "b": 0}, 'height': 3*bar_plot_height})
 
 # Bar charts
 job_function = 'All Jobs'
-df_top_10_canton = df_count_canton[['canton', job_function]].sort_values(job_function, ascending=False)[:10]
+df_canton = df_count_canton[['canton','Name',  job_function]].sort_values(job_function, ascending=False)
+color_bar = 'rgb(220,30,20)'
+fig_Canton_bar = go.Figure(go.Bar(y=df_canton[job_function], x=df_canton['canton'],
+                                  customdata=df_canton['Name'],
+                                  marker={'color': color_bar},
+                                  hovertemplate='%{customdata} :<br> %{y} jobs<extra></extra>',
+                                  showlegend=False),
+                           layout={'margin': {"r": 0, "t": 0, "l": 0, "b": 0},
+                                   'plot_bgcolor': 'white',
+                                   'yaxis':{'gridcolor': 'rgb(250,205,214)'},
+                                   'height': bar_plot_height})
 
-fig_bar_canton = go.Figure(go.Bar(y=df_top_10_canton[job_function], x=df_top_10_canton['canton'],
-                     hovertemplate='%{y} jobs<extra></extra>',
-                     showlegend=False), layout={'margin':{"r": 0, "t": 0, "l": 0, "b": 0}, 'height': bar_plot_height})
-df_top_10_city = df_bubble[['municipality', job_function]].sort_values(job_function, ascending=False)[:10]
-fig_bar_city = go.Figure(go.Bar(y=df_top_10_city[job_function], x=df_top_10_city['municipality'],
-                     hovertemplate='%{y} jobs<extra></extra>',
-                     showlegend=False), layout={'margin':{"r": 0, "t": 0, "l": 0, "b": 0}, 'height': bar_plot_height})
+df_top_10_city = df_count_city[['municipality', job_function]].sort_values(job_function, ascending=False)[:10]
+fig_city_bar = go.Figure(go.Bar(y=df_top_10_city[job_function], x=df_top_10_city['municipality'],
+                                marker={'color': color_bar},
+                                hovertemplate='%{y} jobs<extra></extra>',
+                                showlegend=False),
+                         layout={'margin': {"r": 0, "t": 0, "l": 0, "b": 0},
+                                 'plot_bgcolor': 'white',
+                                 'yaxis':{'gridcolor': 'rgb(250,205,214)'},
+                                 'height': bar_plot_height})
 
+selected_button_style = {'border-color': '#e14c4e', 'background-color': '#dc1e14', 'color': '#FFFFFF', 'border-width': '2px'}
+unselected_button_style = {}#{'border-color': '#e14c4e', 'background-color': '#FFFFFF', 'color': '#e14c4e', 'border-width': '2px'}
+#'border-width': '1px'
+job_map_app = Figures(df_jobs, df_count_city, df_count_canton,
+                 fig_map, fig_pie, fig_Canton_bar, fig_city_bar,
+                 selected_button_style, unselected_button_style)
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-job_functions = df_bubble.columns[4:]
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-
-# assume you have a "long-form" data frame
-# see https://plotly.com/python/px-arguments/ for more options
-
-app.layout = html.Div(children=[
-    html.H1(children='Swiss Employment Map'),
-    html.Div(children=' Hello world '),
-
-    html.Div([
-        dcc.Graph(id='Swiss-Employment-Map',
-                  figure=fig_map),
-        html.Label(["Job Function",
-                dcc.Dropdown(id='DD-job_function',
-                             options=[{'label': jf + ' - ' + str(df_bubble[jf].sum()) + ' jobs'
-                                          , 'value': jf} for jf in job_functions],
-                             value='All Jobs')])
-        ], style={'width': '65%', 'display': 'inline-block', 'padding': '0 0 0 0 '}),
-        html.Div([
-            dcc.Graph(id='pie', figure=fig_pie),
-            dcc.Graph(id='bar_canton', figure=fig_bar_canton),
-            dcc.Graph(id='bar_city', figure=fig_bar_city),
-        ], style={'display': 'inline-block', 'width': '33%'}),
-    html.Div(children=' Made by Jean-Baptiste PROST - Fall 2020 ')
-])
-
-
-@app.callback(Output('Swiss-Employment-Map', 'figure'),
-              [Input('DD-job_function', 'value')])
-def update_canton_and_bubble(job_function):
-    """
-    Updates the scattermapbox and the choroplethmapbox
-    """
-    scale_bubble = 500 / df_bubble[job_function].max()
-    fig_map.update_traces(marker_size=df_bubble[job_function] * scale_bubble,
-                      text=df_bubble['municipality'] + '<br>' + df_bubble[job_function].astype(str) + '<extra></extra>',
-                      selector=dict(type="scattermapbox"), overwrite=True)
-
-    fig_map.update_traces(colorbar_title=job_function,
-                      text=df_count_canton['canton'],
-                      z=df_count_canton[job_function],
-                      selector=dict(type="choroplethmapbox"), overwrite=True)
-
-    return fig_map
-
+server = job_map_app.app
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    job_map_app.app.run_server(debug=True)
