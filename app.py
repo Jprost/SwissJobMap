@@ -29,7 +29,7 @@ job_map_app = Figures(df_jobs, df_count_city, df_count_canton,
 
 del df_count_city, df_count_canton, df_jobs
 
-server = job_map_app.app
+server = job_map_app.app.server
 
 if __name__ == '__main__':
     job_map_app.app.run_server(debug=True)
