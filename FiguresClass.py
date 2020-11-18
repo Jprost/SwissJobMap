@@ -97,6 +97,7 @@ class Figures:
             ])
         ])
         ])
+        del canton_dropdown_labels, job_functions
 
         self.app.callback([Output('Swiss-Employment-Map', 'figure'),
                            Output('fun-pie', 'figure'),

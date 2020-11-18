@@ -1,8 +1,13 @@
-import numpy as np
-import pandas as pd
+import os
+import pickle
+import json
 import unidecode
 
+import numpy as np
+import pandas as pd
 
+
+### Geography - geojson handeling
 def get_municipalities(geojson_municipality):
     nb_municipalicites = len(geojson_municipality["features"])
 
@@ -17,7 +22,6 @@ def get_municipalities(geojson_municipality):
         df.loc[muni, 'lon'] = coor[0]
 
     return df
-
 
 def get_canton_from_city(geojson_municipality):
     """
@@ -35,6 +39,34 @@ def get_canton_from_city(geojson_municipality):
     city_canton_hash['unknown'] = 'unknown'
     return city_canton_hash
 
+def load_swiss_borders_df(DATA_DIR):
+    """
+    Load the longitude and latitude of Swiss municipalities
+    :param DATA_DIR: data folder directory
+    :return: pd.DataFrame of lon and lat for each municipality
+    """
+    JSON_PATH = DATA_DIR + '/Switzerland.geojson'
+    if 'swiss_borders.p' not in os.listdir(DATA_DIR):
+        with open(JSON_PATH, 'r') as j:
+            swiss_borders = json.loads(j.read())
+        df_borders = pd.DataFrame(data={'lat': [np.array(feature["geometry"]["coordinates"][0])[:, 1] for feature in
+                                                swiss_borders['features']][0],
+                                        'lon': [np.array(feature["geometry"]["coordinates"][0])[:, 0] for feature in
+                                                swiss_borders['features']][0]})
+        pickle.dump(df_borders, open(DATA_DIR + '/df_swiss_borders.p', 'wb'))
+        return df_borders
+    else:
+        return pickle.load(open(DATA_DIR + '/df_swiss_borders.p', 'rb'))
+
+def load_swiss_canton_geojson(DATA_DIR):
+    '''
+    :param DATA_DIR: data folder directory
+    :return: the geojson dict of the cantons' borders
+    '''
+    JSON_PATH = DATA_DIR + '/SwissCanton.geojson'
+    with open(JSON_PATH, 'r') as j:
+        swiss_canton_geojson = json.loads(j.read())
+    return swiss_canton_geojson
 
 def clean_df_jobs(df_jobs):
     """
