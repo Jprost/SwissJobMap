@@ -38,7 +38,7 @@ class Figures:
         job_functions = df_count_city.columns[4:]
         self.app.layout = html.Div(children=[
             html.H1(children='Swiss Employment Map'),
-            html.Div(children='Hello world'),
+            html.Div(children='In progress ... text in coming'),
             # html.Button('Reset', id='b-r', style={'vertical-align': 'middle'}),
 
             html.Div([
