@@ -1,4 +1,6 @@
+import sys
 import pickle
+sys.path.append('../Src/')
 from FiguresClass import Figures
 from Plotting import draw_canton_and_bubble_chart, draw_pie_chart, draw_bar_charts
 
@@ -9,7 +11,7 @@ df_count_canton = pickle.load(open(DATA_DIR +'/df_canton_count.p', 'rb'))
 df_jobs = pickle.load(open(DATA_DIR +'/df_jobs.p', 'rb'))
 
 # --- Plotting
-bar_plot_height = 175
+bar_plot_height = 150
 scale_bubble = 1 #800 / df_count_city['All Jobs'].max()
 job_function = 'All Jobs'
 fig_map = draw_canton_and_bubble_chart(job_function, df_count_city, df_count_canton, scale_bubble, DATA_DIR, bar_plot_height)
