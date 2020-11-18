@@ -39,7 +39,7 @@ class Figures:
         job_functions = df_count_city.columns[4:]
         self.app.layout = html.Div(children=[
             html.H1(children='Swiss Employment Map'),
-            html.Div(children='In progress ... text in coming. In teh meantime, please feel free to click on teh map, the pi and bar charts and selecte job function, cantons or cities in the dropdown menus.'),
+            html.Div(children='In progress ... text in coming. In the meantime, please feel free to click on the map, the pie and bar charts or select job functions, cantons or cities in the dropdown menus. Data was scrapped from LinkedIn.'),
             # html.Button('Reset', id='b-r', style={'vertical-align': 'middle'}),
 
             html.Div([
