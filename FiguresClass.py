@@ -34,11 +34,12 @@ class Figures:
         self.staff_and_recr = True
 
         self.app = dash.Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
+        self.app.title = 'SwissJobMap'
         canton_dropdown_labels = df_count_canton.canton + ' - ' + df_count_canton.Name
         job_functions = df_count_city.columns[4:]
         self.app.layout = html.Div(children=[
             html.H1(children='Swiss Employment Map'),
-            html.Div(children='In progress ... text in coming'),
+            html.Div(children='In progress ... text in coming. In teh meantime, please feel free to click on teh map, the pi and bar charts and selecte job function, cantons or cities in the dropdown menus.'),
             # html.Button('Reset', id='b-r', style={'vertical-align': 'middle'}),
 
             html.Div([
