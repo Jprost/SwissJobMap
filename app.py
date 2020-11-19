@@ -1,6 +1,6 @@
 import pickle
-from src.figures_class import Figures
-from src.plotting import draw_canton_and_bubble_chart, draw_pie_chart, draw_bar_charts
+from source.figures_class import Figures
+from source.plotting import draw_canton_and_bubble_chart, draw_pie_chart, draw_bar_charts
 
 # Loads dataframes
 DATA_DIR = './Data/'
