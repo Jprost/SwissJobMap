@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="870c8bc1-ea1a-40a6-8c4d-af6b42c72e56" name="Default Changelist" comment="" />
+    <list default="true" id="870c8bc1-ea1a-40a6-8c4d-af6b42c72e56" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/JobMap.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/JobMap.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Src/DataFormating.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Src/FiguresClass.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,25 +21,30 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1jyaNfmzbznfuJETQzZwASBstAj" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/Src" />
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.app">
     <configuration name="WebPageTemplate" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="JobMap" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -54,8 +66,30 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="JobMap" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.app" />
         <item itemvalue="Python.WebPageTemplate" />
       </list>
     </recent_temporary>
@@ -74,26 +108,42 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1676" height="557" key="GridCell.Tab.0.bottom" timestamp="1604962280195">
-      <screen x="1280" y="-812" width="3440" height="1417" />
+    <state x="2868" y="-529" key="FileChooserDialogImpl" timestamp="1605720236045">
+      <screen x="1280" y="-760" width="3440" height="1417" />
+    </state>
+    <state x="2868" y="-529" key="FileChooserDialogImpl/0.23.1280.777/1280.-760.3440.1417@1280.-760.3440.1417" timestamp="1605720236045" />
+    <state width="1396" height="237" key="GridCell.Tab.0.bottom" timestamp="1605727883558">
+      <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="1396" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1604931286262" />
+    <state width="1676" height="237" key="GridCell.Tab.0.bottom/0.23.1280.777/1280.-760.3440.1417@1280.-760.3440.1417" timestamp="1605724215563" />
     <state width="1676" height="557" key="GridCell.Tab.0.bottom/0.23.1280.777/1280.-812.3440.1417@1280.-812.3440.1417" timestamp="1604962280195" />
-    <state width="1676" height="557" key="GridCell.Tab.0.center" timestamp="1604962280195">
-      <screen x="1280" y="-812" width="3440" height="1417" />
+    <state width="1396" height="237" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1605727161916" />
+    <state width="1396" height="237" key="GridCell.Tab.0.bottom/0.23.1920.1057@0.23.1920.1057" timestamp="1605727883558" />
+    <state width="1396" height="237" key="GridCell.Tab.0.center" timestamp="1605727883557">
+      <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="1396" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1604931286260" />
+    <state width="1676" height="237" key="GridCell.Tab.0.center/0.23.1280.777/1280.-760.3440.1417@1280.-760.3440.1417" timestamp="1605724215561" />
     <state width="1676" height="557" key="GridCell.Tab.0.center/0.23.1280.777/1280.-812.3440.1417@1280.-812.3440.1417" timestamp="1604962280195" />
-    <state width="1676" height="557" key="GridCell.Tab.0.left" timestamp="1604962280194">
-      <screen x="1280" y="-812" width="3440" height="1417" />
+    <state width="1396" height="237" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1605727161915" />
+    <state width="1396" height="237" key="GridCell.Tab.0.center/0.23.1920.1057@0.23.1920.1057" timestamp="1605727883557" />
+    <state width="1396" height="237" key="GridCell.Tab.0.left" timestamp="1605727883556">
+      <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="1396" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1604931286260" />
+    <state width="1676" height="237" key="GridCell.Tab.0.left/0.23.1280.777/1280.-760.3440.1417@1280.-760.3440.1417" timestamp="1605724215561" />
     <state width="1676" height="557" key="GridCell.Tab.0.left/0.23.1280.777/1280.-812.3440.1417@1280.-812.3440.1417" timestamp="1604962280194" />
-    <state width="1676" height="557" key="GridCell.Tab.0.right" timestamp="1604962280195">
-      <screen x="1280" y="-812" width="3440" height="1417" />
+    <state width="1396" height="237" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1605727161913" />
+    <state width="1396" height="237" key="GridCell.Tab.0.left/0.23.1920.1057@0.23.1920.1057" timestamp="1605727883556" />
+    <state width="1396" height="237" key="GridCell.Tab.0.right" timestamp="1605727883557">
+      <screen x="0" y="23" width="1920" height="1057" />
     </state>
     <state width="1396" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1604931286261" />
+    <state width="1676" height="237" key="GridCell.Tab.0.right/0.23.1280.777/1280.-760.3440.1417@1280.-760.3440.1417" timestamp="1605724215562" />
     <state width="1676" height="557" key="GridCell.Tab.0.right/0.23.1280.777/1280.-812.3440.1417@1280.-812.3440.1417" timestamp="1604962280195" />
+    <state width="1396" height="237" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1605727161915" />
+    <state width="1396" height="237" key="GridCell.Tab.0.right/0.23.1920.1057@0.23.1920.1057" timestamp="1605727883557" />
     <state width="1676" height="502" key="GridCell.Tab.1.bottom" timestamp="1604932058887">
       <screen x="1280" y="-812" width="3440" height="1417" />
     </state>
@@ -110,25 +160,15 @@
       <screen x="1280" y="-812" width="3440" height="1417" />
     </state>
     <state width="1676" height="502" key="GridCell.Tab.1.right/0.23.1280.777/1280.-812.3440.1417@1280.-812.3440.1417" timestamp="1604932058886" />
-    <state x="1808" y="-672" key="SettingsEditor" timestamp="1604945164651">
-      <screen x="1280" y="-812" width="3440" height="1417" />
+    <state x="2589" y="-651" key="SettingsEditor" timestamp="1605789129072">
+      <screen x="1280" y="-760" width="3440" height="1417" />
     </state>
     <state x="221" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1604921843388" />
+    <state x="2589" y="-651" key="SettingsEditor/0.23.1280.777/1280.-760.3440.1417@1280.-760.3440.1417" timestamp="1605789129072" />
     <state x="1808" y="-672" key="SettingsEditor/0.23.1280.777/1280.-812.3440.1417@1280.-812.3440.1417" timestamp="1604945164651" />
     <state x="422" y="58" width="596" height="783" key="find.popup" timestamp="1604922511648">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="422" y="58" width="596" height="783" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1604922511648" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Src/DataFormating.py</url>
-          <line>38</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

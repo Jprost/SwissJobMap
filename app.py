@@ -1,8 +1,6 @@
-import sys
 import pickle
-sys.path.append('../Src/')
-from FiguresClass import Figures
-from Plotting import draw_canton_and_bubble_chart, draw_pie_chart, draw_bar_charts
+from src.figures_class import Figures
+from src.plotting import draw_canton_and_bubble_chart, draw_pie_chart, draw_bar_charts
 
 # Loads dataframes
 DATA_DIR = './Data/'

@@ -1,6 +1,6 @@
 import plotly.graph_objects as go
 from plotly.colors import label_rgb, n_colors
-from DataFormating import load_swiss_borders_df, load_swiss_canton_geojson
+from data_formating import load_swiss_borders_df, load_swiss_canton_geojson
 
 def draw_canton_and_bubble_chart(job_function, df_count_city, df_count_canton, scale_bubble, DATA_DIR, bar_plot_height):
     """
