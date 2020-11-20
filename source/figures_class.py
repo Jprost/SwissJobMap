@@ -28,7 +28,7 @@ class Figures:
 
         self.selected_button_style = selected_button_style
         self.unselected_button_style = unselected_button_style
-        self.btn_canton, self.btn_both, self.btn_staff_off  = {}, {}, {}
+        self.btn_canton, self.btn_both, self.btn_staff_off = {}, {}, {}
         self.btn_staff_on, self.btn_city = selected_button_style, selected_button_style
 
         self.staff_and_recr = True
@@ -39,7 +39,16 @@ class Figures:
         job_functions = df_count_city.columns[4:]
         self.app.layout = html.Div(children=[
             html.H1(children='Swiss Employment Map'),
-            html.Div(children='In progress ... text in coming. In the meantime, please feel free to click on the map, the pie and bar charts or select job functions, cantons or cities in the dropdown menus. Data was scrapped from LinkedIn.'),
+            html.Div(children=(["What part of Switzerland hires the most ? Where could I expect to find companies "
+                                 "specialized in biotechnology ? What kind of jobs are proposed in the canton of Bern ? "
+                                 "Does Geneva offers non-profit organization jobs ?",
+                                 html.Br(),
+                                 "The project in build on data scrapped from LinkedIn from to November 8, 2020 to "
+                                 "November20, 2020 ",
+                                 html.Br(),
+                                 "Due to some irregular job ads, the location could not be found. Thus the number of "
+                                 "jobs accounted in the pie chart is not eh same as the number of jobs displayed on "
+                                 "the map."])),
             # html.Button('Reset', id='b-r', style={'vertical-align': 'middle'}),
 
             html.Div([
@@ -67,36 +76,41 @@ class Figures:
                                                                             'margin-right': 10,
                                                                             'vertical-align': 'middle'}),
                                   html.Button('On', id='staff-on', style=self.selected_button_style),
-                                  html.Button('Off', id='staff-off', style=self.unselected_button_style)], style={'display': 'inline-block','margin-top': 10}),
+                                  html.Button('Off', id='staff-off', style=self.unselected_button_style)],
+                                 style={'display': 'inline-block', 'margin-top': 10}),
 
                         html.Div(children=[
                             html.H4(children='Switzerland - All Job Functions', id='dynamic-title',
-                                    style={'margin-top': 30, 'margin-bottom': 30, 'text-align': 'center', 'font-size': 'xx-large'}),
-                            dcc.Graph(id='fun-pie', figure=self.fig_pie, clickData={'points': [{'label': 'All Jobs'}]})],
+                                    style={'margin-top': 30, 'margin-bottom': 30, 'text-align': 'center',
+                                           'font-size': 'xx-large'}),
+                            dcc.Graph(id='fun-pie', figure=self.fig_pie,
+                                      clickData={'points': [{'label': 'All Jobs'}]})],
                             style={'vertical-align': 'bottom'}),
 
-                        ], style={'display': 'inline-block', 'width': '33%', 'margin-left': 10, 'vertical-align': 'bottom'}),
-
-                html.Div([
-                    html.Div([
-                        html.H4(children='Cantons'),
-                        dcc.Dropdown(id='Canton_DD', options=[{'label': c_lab, 'value': C} for C, c_lab in zip(df_count_canton.canton, canton_dropdown_labels)],
-                                     placeholder='Select a canton ...'),
-                        dcc.Graph(id='Canton_bar', figure=self.fig_Canton_bar)],
-                        style={'width': '65%', 'display': 'inline-block', 'margin-left': 10, 'margin-right': 10}),
+                    ], style={'display': 'inline-block', 'width': '33%', 'margin-left': 10,
+                              'vertical-align': 'bottom'}),
 
                     html.Div([
-                        html.H4(children='Cities'),
-                        dcc.Dropdown(id='city_DD',
-                                     options=[{'label': c, 'value': c} for c in df_count_city.municipality],
-                                     placeholder='Select a city ...'),
-                        dcc.Graph(id='city_bar', figure=self.fig_city_bar)],
-                        style={'display': 'inline-block', 'width': '33%', 'margin-left': 10}),
-                ]),
+                        html.Div([
+                            html.H4(children='Cantons'),
+                            dcc.Dropdown(id='Canton_DD', options=[{'label': c_lab, 'value': C} for C, c_lab in
+                                                                  zip(df_count_canton.canton, canton_dropdown_labels)],
+                                         placeholder='Select a canton ...'),
+                            dcc.Graph(id='Canton_bar', figure=self.fig_Canton_bar)],
+                            style={'width': '65%', 'display': 'inline-block', 'margin-left': 10, 'margin-right': 10}),
 
-                html.Div(children=' Made by Jean-Baptiste PROST - Fall 2020 ')
+                        html.Div([
+                            html.H4(children='Cities'),
+                            dcc.Dropdown(id='city_DD',
+                                         options=[{'label': c, 'value': c} for c in df_count_city.municipality],
+                                         placeholder='Select a city ...'),
+                            dcc.Graph(id='city_bar', figure=self.fig_city_bar)],
+                            style={'display': 'inline-block', 'width': '33%', 'margin-left': 10}),
+                    ]),
+
+                    html.Div(children=' Made by Jean-Baptiste PROST - Fall 2020 ')
+                ])
             ])
-        ])
         ])
         del canton_dropdown_labels, job_functions
 
@@ -116,16 +130,16 @@ class Figures:
                           prevent_initial_call=True)(self.update_map_job_function)
 
         self.app.callback(Output('function-DD', 'value'),
-                     Input('fun-pie', 'clickData'),
-                     prevent_initial_call=True)(self.update_job_function_dropdown_value)
+                          Input('fun-pie', 'clickData'),
+                          prevent_initial_call=True)(self.update_job_function_dropdown_value)
 
         self.app.callback(Output('Canton_DD', 'value'),
-                     Input('Canton_bar', 'clickData'),
-                     prevent_initial_call=True)(self.update_canton_dropdown_value)
+                          Input('Canton_bar', 'clickData'),
+                          prevent_initial_call=True)(self.update_canton_dropdown_value)
 
         self.app.callback(Output('city_DD', 'value'),
-                     Input('city_bar', 'clickData'),
-                     prevent_initial_call=True)(self.update_city_dropdown_value)
+                          Input('city_bar', 'clickData'),
+                          prevent_initial_call=True)(self.update_city_dropdown_value)
 
     def update_map_job_function(self, click_cities, click_cantons, click_both,
                                 job_function_dd, job_function_pie,
@@ -206,7 +220,7 @@ class Figures:
             elif city_DD is not None:  # dropdown menu
                 city = city_DD
 
-            #df_city_tmp = self.df_count_city[self.df_count_city.municipality == city]
+            # df_city_tmp = self.df_count_city[self.df_count_city.municipality == city]
             self.df_city_color.at[self.df_city_color.municipality == city, 'color'] = 'rgb(255,0,0)'
             self.fig_map.update_traces(visible=False, selector=dict(type="choroplethmapbox"), overwrite=True)
             self.fig_map.update_traces(visible=True, selector=dict(type="scattermapbox"), overwrite=True)
@@ -225,9 +239,11 @@ class Figures:
             # city is too small to be seen
             if self.df_count_city.loc[self.df_count_city.municipality == city, self.job_function].values[0] < 50:
                 # extract the original nbr of jobs
-                nb_jobs_tmp = self.df_count_city.loc[self.df_count_city.municipality == city, self.job_function].values[0]
+                nb_jobs_tmp = self.df_count_city.loc[self.df_count_city.municipality == city, self.job_function].values[
+                    0]
                 # set arbitrary size
-                self.df_count_city.at[self.df_count_city.municipality == city, self.job_function] = 50 /self.scale_bubble
+                self.df_count_city.at[
+                    self.df_count_city.municipality == city, self.job_function] = 50 / self.scale_bubble
                 self.fig_map.update_traces(marker={'color': self.df_city_color['color'],
                                                    'size': self.df_count_city[self.job_function] * self.scale_bubble,
                                                    'sizemode': 'area'},
@@ -269,9 +285,10 @@ class Figures:
                                        z=self.df_count_canton[self.job_function],
                                        selector=dict(type="choroplethmapbox"), overwrite=True)
 
-            df_canton = self.df_count_canton[['canton', self.job_function]].sort_values(self.job_function, ascending=False)
+            df_canton = self.df_count_canton[['canton', self.job_function]].sort_values(self.job_function,
+                                                                                        ascending=False)
             df_top_10_city = self.df_count_city[['municipality', self.job_function]].sort_values(self.job_function,
-                                                                                            ascending=False)[:10]
+                                                                                                 ascending=False)[:10]
 
             self.fig_Canton_bar.update_traces(y=df_canton[self.job_function], x=df_canton['canton'])
             self.fig_city_bar.update_traces(y=df_top_10_city[self.job_function], x=df_top_10_city['municipality'])
@@ -279,10 +296,13 @@ class Figures:
             dynamic_title += ' -  All Jobs'
 
         return self.fig_map, self.fig_pie, self.fig_Canton_bar, self.fig_city_bar, \
-               self.btn_city, self.btn_canton, self.btn_both, self.btn_staff_on, self.btn_staff_off,\
+               self.btn_city, self.btn_canton, self.btn_both, self.btn_staff_on, self.btn_staff_off, \
                dynamic_title
 
     def pie_update(self, canton, city):
+        """
+        Updates the pie chart according to the city, the canton or the binary `Staffing adn Recruiting` button
+        """
 
         if city is not None:
             if self.staff_and_recr:
@@ -311,13 +331,13 @@ class Figures:
             self.fig_pie.update_traces(labels=df_tmp.index,
                                        values=df_tmp, overwrite=True)
 
-    def update_job_function_dropdown_value(self,job_function):
+    def update_job_function_dropdown_value(self, job_function) -> str:
         """
         Updates the value displayed/selected by the dropdown menu
         """
         return job_function['points'][0]['label']
 
-    def update_canton_dropdown_value(self,Canton_bars):
+    def update_canton_dropdown_value(self, Canton_bars) -> str:
         """
         Updates the value displayed/selected by the dropdown menu
         """
@@ -326,7 +346,7 @@ class Figures:
         else:
             pass
 
-    def update_city_dropdown_value(self,city_bars):
+    def update_city_dropdown_value(self, city_bars) -> str:
         """
         Updates the value displayed/selected by the dropdown menu
         """

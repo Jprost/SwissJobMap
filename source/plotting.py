@@ -2,7 +2,9 @@ import plotly.graph_objects as go
 from plotly.colors import label_rgb, n_colors
 from .data_formating import load_swiss_borders_df, load_swiss_canton_geojson
 
-def draw_canton_and_bubble_chart(job_function, df_count_city, df_count_canton, scale_bubble, DATA_DIR, bar_plot_height):
+
+def draw_canton_and_bubble_chart(job_function, df_count_city, df_count_canton,
+                                 scale_bubble, DATA_DIR, bar_plot_height) -> go.Figure:
     """
     Creates:
      - a chororpleth of the number of jobs (of a certain function) per canton
@@ -73,7 +75,8 @@ def draw_canton_and_bubble_chart(job_function, df_count_city, df_count_canton, s
 
     return fig_map
 
-def draw_pie_chart(df_jobs, bar_plot_height):
+
+def draw_pie_chart(df_jobs, bar_plot_height) -> go.Figure:
     """
     Creates the pie chart
 
@@ -83,9 +86,9 @@ def draw_pie_chart(df_jobs, bar_plot_height):
 
     Returns a go.Figure
     """
-    df_job_function = df_jobs[df_jobs.columns[10:]].sum()
+    df_job_function = df_jobs[df_jobs.columns[5:]].sum()
 
-    colors = [label_rgb(c) for c in n_colors((200, 27, 18), (113, 15, 11), len(df_jobs.columns[10:]))]
+    colors = [label_rgb(c) for c in n_colors((200, 27, 18), (113, 15, 11), df_job_function.shape[1])]
     fig_pie = go.Figure(go.Pie(labels=df_job_function.index,
                                values=df_job_function,
                                marker={'colors': colors},
@@ -96,7 +99,8 @@ def draw_pie_chart(df_jobs, bar_plot_height):
                         layout={'margin': {"r": 0, "t": 0, "l": 0, "b": 0}, 'height': 3 * bar_plot_height})
     return fig_pie
 
-def draw_bar_charts(df_count_city, df_count_canton, job_function, bar_plot_height):
+
+def draw_bar_charts(df_count_city, df_count_canton, job_function, bar_plot_height) -> go.Figure:
     """
 
     :param df_count_city:
