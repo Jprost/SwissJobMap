@@ -33,7 +33,7 @@ class Figures:
 
         self.staff_and_recr = True
 
-        self.app = dash.Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
+        self.app = dash.Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'],)
         self.app.title = 'SwissJobMap'
         canton_dropdown_labels = df_count_canton.canton + ' - ' + df_count_canton.Name
         job_functions = df_count_city.columns[4:]
@@ -116,15 +116,9 @@ class Figures:
                                      'function.', style={'font-size': 'large', 'font-family': 'avenir'})],
                             style={'display': 'inline-block', 'width': '33%', 'margin-left': 10}),
                     ]),
-                    html.H6(["The project in built on data scrapped from ",
-                         html.A('LinkedIn', href='www.linkedin.ch', style={'font-style': 'italic'}),
-        " from to November 8, 2020 to "
-                                 "November 20, 2020.",
-                                 html.Br(),
-                                 "Due to some irregular job ads, their location could not be found. Thus the number of "
-                                 "jobs accounted in the pie chart is not the same as the number of jobs displayed on "
-                                 "the map."], style={'margin-left': 10, 'margin-top': 20, 'font-family': 'avenir'}),
-                    html.Footer(children=' Made by Jean-Baptiste PROST - Fall 2020 ', style={'text-align': 'right'}),
+
+                    html.Footer(children=' Made by Jean-Baptiste PROST - Fall 2020 ', style={'text-align': 'right',
+                                                                                             'margin-top': 20}),
                 ])
             ])
         ])
