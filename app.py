@@ -23,7 +23,7 @@ fig_Canton_bar, fig_city_bar = draw_bar_charts(df_count_city, df_count_canton, j
 selected_button_style = {'border-color': '#e14c4e', 'background-color': '#dc1e14', 'color': '#FFFFFF', 'border-width': '2px'}
 unselected_button_style = {}
 
-job_map_app = Figures(df_jobs, df_count_city, df_count_canton,
+job_map_app = Figures(df_jobs,df_count_city, df_count_canton,
                 fig_map, fig_pie, fig_Canton_bar, fig_city_bar,
                 selected_button_style, unselected_button_style)
 

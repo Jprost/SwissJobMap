@@ -35,6 +35,7 @@ class Figures:
 
         self.app = dash.Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
         self.app.title = 'SwissJobMap'
+        self.app.
         canton_dropdown_labels = df_count_canton.canton + ' - ' + df_count_canton.Name
         job_functions = df_count_city.columns[4:]
         self.app.layout = html.Div(children=[
