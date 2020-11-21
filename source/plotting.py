@@ -88,7 +88,7 @@ def draw_pie_chart(df_jobs, bar_plot_height) -> go.Figure:
     """
     df_job_function = df_jobs[df_jobs.columns[5:]].sum()
 
-    colors = [label_rgb(c) for c in n_colors((200, 27, 18), (113, 15, 11), df_job_function.shape[1])]
+    colors = [label_rgb(c) for c in n_colors((200, 27, 18), (113, 15, 11), df_job_function.shape[0])]
     fig_pie = go.Figure(go.Pie(labels=df_job_function.index,
                                values=df_job_function,
                                marker={'colors': colors},

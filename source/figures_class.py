@@ -38,18 +38,23 @@ class Figures:
         canton_dropdown_labels = df_count_canton.canton + ' - ' + df_count_canton.Name
         job_functions = df_count_city.columns[4:]
         self.app.layout = html.Div(children=[
-            html.H1(children='Swiss Employment Map'),
-            html.Div(children=(["What part of Switzerland hires the most ? Where could I expect to find companies "
-                                 "specialized in biotechnology ? What kind of jobs are proposed in the canton of Bern ? "
-                                 "Does Geneva offers non-profit organization jobs ?",
+            html.H1(children='Swiss Employment Map', style={'margin-left': 10, 'margin-bottom': 10}),
+            html.Div(style={'background-color': '#dc1e14', 'height': 2, 'margin-bottom': 20}),
+            html.H6(children=(["What part of Switzerland hires the most ? Where could I expect to find companies "
+                                 "specialized in biotechnology ? What kind of jobs are proposed in the canton of Bern ?"
+                                 " Does Geneva offers non-profit organization jobs ?",
                                  html.Br(),
-                                 "The project in build on data scrapped from LinkedIn from to November 8, 2020 to "
-                                 "November20, 2020 ",
-                                 html.Br(),
-                                 "Due to some irregular job ads, the location could not be found. Thus the number of "
-                                 "jobs accounted in the pie chart is not eh same as the number of jobs displayed on "
-                                 "the map."])),
-            # html.Button('Reset', id='b-r', style={'vertical-align': 'middle'}),
+                                "The goal of this project was to create a visual and interactive representation of the "
+                                "Switzerland's dynamism at the national, cantonal and municipal scale. "
+                                "Statistical descriptions of the job function enable to understand the geographic "
+                                "organisation and polarisation of certain industries.",
+                               html.Br(),
+                               "The project in built on data scrapped from ",
+                               html.A('LinkedIn', href='https://www.linkedin.com/', style={'font-style': 'italic'}),
+                               " from to November 8, 2020 to "
+                               "November 20, 2020."
+                               ]),
+                     style={'margin-left': 10, 'font-family': 'avenir'}),
 
             html.Div([
                 html.Div([
@@ -96,7 +101,9 @@ class Figures:
                             dcc.Dropdown(id='Canton_DD', options=[{'label': c_lab, 'value': C} for C, c_lab in
                                                                   zip(df_count_canton.canton, canton_dropdown_labels)],
                                          placeholder='Select a canton ...'),
-                            dcc.Graph(id='Canton_bar', figure=self.fig_Canton_bar)],
+                            dcc.Graph(id='Canton_bar', figure=self.fig_Canton_bar),
+                            html.Div('The bars represent the cantons ranked by number of jobs of a certain function '
+                                     'in decreasing order.', style={'font-size': 'large', 'font-family': 'avenir'})],
                             style={'width': '65%', 'display': 'inline-block', 'margin-left': 10, 'margin-right': 10}),
 
                         html.Div([
@@ -104,11 +111,20 @@ class Figures:
                             dcc.Dropdown(id='city_DD',
                                          options=[{'label': c, 'value': c} for c in df_count_city.municipality],
                                          placeholder='Select a city ...'),
-                            dcc.Graph(id='city_bar', figure=self.fig_city_bar)],
+                            dcc.Graph(id='city_bar', figure=self.fig_city_bar),
+                            html.Div('The chart displays the ten most represented cities for a particular job'
+                                     'function.', style={'font-size': 'large', 'font-family': 'avenir'})],
                             style={'display': 'inline-block', 'width': '33%', 'margin-left': 10}),
                     ]),
-
-                    html.Div(children=' Made by Jean-Baptiste PROST - Fall 2020 ')
+                    html.H6(["The project in built on data scrapped from ",
+                         html.A('LinkedIn', href='www.linkedin.ch', style={'font-style': 'italic'}),
+        " from to November 8, 2020 to "
+                                 "November 20, 2020.",
+                                 html.Br(),
+                                 "Due to some irregular job ads, their location could not be found. Thus the number of "
+                                 "jobs accounted in the pie chart is not the same as the number of jobs displayed on "
+                                 "the map."], style={'margin-left': 10, 'margin-top': 20, 'font-family': 'avenir'}),
+                    html.Footer(children=' Made by Jean-Baptiste PROST - Fall 2020 ', style={'text-align': 'right'}),
                 ])
             ])
         ])
