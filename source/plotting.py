@@ -6,7 +6,6 @@ import numpy as np
 
 import plotly.graph_objects as go
 from plotly.colors import label_rgb, n_colors
-from scrapping.data_formatting import load_swiss_borders_df, load_swiss_canton_geojson
 
 """
 Functions used to plot the charts at the launching of the web app. 
