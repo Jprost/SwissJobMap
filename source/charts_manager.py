@@ -47,9 +47,9 @@ class ChartsManager:
         self.app.layout = html.Div(children=[
             html.H1(children='Swiss Employment Map', style={'margin-left': 10, 'margin-bottom': 10}),
             html.Div(style={'background-color': '#dc1e14', 'height': 2, 'margin-bottom': 20}),
-            html.H6(children=(["What part of Switzerland hires the most ? Where could I expect to find companies "
+            html.H6(children=([html.Strong("What part of Switzerland hires the most ? Where could I expect to find companies "
                                  "specialized in biotechnology ? What kind of jobs are proposed in the canton of Bern ?"
-                                 " Does Geneva offers non-profit organization jobs ?",
+                                 " Does Geneva offers non-profit organization jobs ?"),
                                  html.Br(),
                                 "The goal of this project was to create a visual and interactive representation of the "
                                 "Switzerland's dynamism at the national, cantonal and municipal scale. "
