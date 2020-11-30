@@ -4,8 +4,14 @@ import dash_core_components as dcc
 import dash_html_components as html
 
 
-class Figures:
-
+class ChartsManager:
+    """
+    This class manages the web app.
+    An instance will recieve teh data and the plots. The HTML layout is defined at its creation.
+    The instance stores the current states of each chart (map, pie and two bar charts) dropdown menus and buttons.
+    When one elements is activated/clicked it modifies the aspect of others. Multiple elements combinations are
+    possibles to modify the display of others.
+    """
     def __init__(self, df_jobs, df_count_city, df_count_canton,
                  fig_map, fig_pie, fig_Canton_bar, fig_city_bar,
                  selected_button_style, unselected_button_style):
@@ -37,6 +43,7 @@ class Figures:
         self.app.title = 'SwissJobMap'
         canton_dropdown_labels = df_count_canton.canton + ' - ' + df_count_canton.Name
         job_functions = df_count_city.columns[4:]
+
         self.app.layout = html.Div(children=[
             html.H1(children='Swiss Employment Map', style={'margin-left': 10, 'margin-bottom': 10}),
             html.Div(style={'background-color': '#dc1e14', 'height': 2, 'margin-bottom': 20}),

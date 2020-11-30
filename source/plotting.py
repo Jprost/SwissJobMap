@@ -1,6 +1,48 @@
+import pickle
+import json
+import os
+import pandas as pd
+import numpy as np
+
 import plotly.graph_objects as go
 from plotly.colors import label_rgb, n_colors
-from .data_formating import load_swiss_borders_df, load_swiss_canton_geojson
+from scrapping.data_formatting import load_swiss_borders_df, load_swiss_canton_geojson
+
+"""
+Functions used to plot the charts at the launching of the web app. 
+Their successive modification will be done by a `update` method.
+"""
+
+# Geography - geojson handling
+def load_swiss_borders_df(DATA_DIR):
+    """
+    Load the longitude and latitude of Swiss municipalities
+    :param DATA_DIR: data folder directory
+    :return: pd.DataFrame of lon and lat for each municipality
+    """
+    JSON_PATH = DATA_DIR + '/Switzerland.geojson'
+    if 'swiss_borders.p' not in os.listdir(DATA_DIR):
+        with open(JSON_PATH, 'r') as j:
+            swiss_borders = json.loads(j.read())
+        df_borders = pd.DataFrame(data={'lat': [np.array(feature["geometry"]["coordinates"][0])[:, 1] for feature in
+                                                swiss_borders['features']][0],
+                                        'lon': [np.array(feature["geometry"]["coordinates"][0])[:, 0] for feature in
+                                                swiss_borders['features']][0]})
+        pickle.dump(df_borders, open(DATA_DIR + '/df_swiss_borders.p', 'wb'))
+        return df_borders
+    else:
+        return pickle.load(open(DATA_DIR + '/df_swiss_borders.p', 'rb'))
+
+
+def load_swiss_canton_geojson(DATA_DIR):
+    '''
+    :param DATA_DIR: data folder directory
+    :return: the geojson dict of the cantons' borders
+    '''
+    JSON_PATH = DATA_DIR + '/SwissCanton.geojson'
+    with open(JSON_PATH, 'r') as j:
+        swiss_canton_geojson = json.loads(j.read())
+    return swiss_canton_geojson
 
 
 def draw_canton_and_bubble_chart(job_function, df_count_city, df_count_canton,
@@ -100,14 +142,17 @@ def draw_pie_chart(df_jobs, bar_plot_height) -> go.Figure:
     return fig_pie
 
 
-def draw_bar_charts(df_count_city, df_count_canton, job_function, bar_plot_height) -> go.Figure:
+def draw_bar_charts(df_count_city, df_count_canton, job_function, bar_plot_height) -> [go.Figure, go.Figure]:
     """
+    Draw the two bar charts.
 
-    :param df_count_city:
-    :param df_count_canton:
-    :param job_function:
-    :param bar_plot_height:
-    :return:
+    Inputs:
+     df_count_city: pd.DataFrame, nbr of jobs per city
+     df_count_canton: pd.DataFrame, nbr of jobs per canton
+     job_function: str, job function
+     bar_plot_height: int, the height of the bar plots
+
+    Returns two go.Figures
     """
     # bar chart for cantons
     # ordering job numbers in decreasing order
@@ -134,3 +179,4 @@ def draw_bar_charts(df_count_city, df_count_canton, job_function, bar_plot_heigh
                                      'height': bar_plot_height})
 
     return fig_Canton_bar, fig_city_bar
+

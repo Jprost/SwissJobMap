@@ -2,5 +2,5 @@ SwissJobEnv
 *.pyc
 .DS_Store
 .env
-.ipynb_checkpoints/
-.idea/
+.ipynb_checkpoints
+.idea
