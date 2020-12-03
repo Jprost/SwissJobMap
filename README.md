@@ -7,4 +7,4 @@ during November 2020.
 
 The web app can be found [here](https://swiss-job-map.herokuapp.com/)
 
-Soon: integrate automating update and time filtering thanks run on a RaspberryPie
+Upgrade incoming : integrate automating update and time filtering thanks run on a RaspberryPie
