@@ -144,7 +144,7 @@ def save_df_jobs(new_df: pd.DataFrame) -> None:
         job_df_augmented.reset_index(drop=True, inplace=True)
         pickle.dump(job_df_augmented, open('./Data/df_jobs.p', 'wb'))
     except FileNotFoundError:
-        pickle.dump(new_df, open('./Data/df_jobs.p', 'wb'))
+        pickle.dump(new_df, open('../Data/df_jobs.p', 'wb'))
 
 
 def save_df_jobs_content(new_df: pd.DataFrame) -> None:
@@ -152,15 +152,15 @@ def save_df_jobs_content(new_df: pd.DataFrame) -> None:
     Loads the df_jobs_content and gather to the previouly scrapped
     """
     try:
-        job_df_old = pickle.load(open('./Data/df_jobs_content.p', 'rb'))
+        job_df_old = pickle.load(open('../Data/df_jobs_content.p', 'rb'))
         # append the old list, most recent on top
         job_df_augmented = job_df_old.append(new_df).drop_duplicates()
         pickle.dump(job_df_augmented, open('./Data/df_jobs_content.p', 'wb'))
     except FileNotFoundError:
-        pickle.dump(new_df, open('./Data/df_jobs_content.p', 'wb'))
+        pickle.dump(new_df, open('../Data/df_jobs_content.p', 'wb'))
 
 
-def save_data_frames(df_jobs: pd.DataFrame, df_jobs_content: pd.DataFrame) -> None:
+def save_dataframes(df_jobs: pd.DataFrame, df_jobs_content: pd.DataFrame) -> None:
     """
     Save the dataframes
     """
