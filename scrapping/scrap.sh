@@ -6,7 +6,8 @@ do
 		python3 scrap.py
 		git pull
 		git add ../Data/df_jobs_content.p ../Data/df_jobs.p
-		git commit -m `date +"%a-%d-%b %H"`
+		currentDate=
+		git commit -m "$(date +'%a-%d-%b %Hh')"
 		git push
 
 		sleep 1h
