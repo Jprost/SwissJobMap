@@ -12,7 +12,7 @@ handlers:
     stream: ext://sys.stdout
   file:
     class: logging.FileHandler
-    level: DEBUG
+    level: INFO
     formatter: standard
     filename: scrapper_process.log
   email:
