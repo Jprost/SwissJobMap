@@ -135,14 +135,14 @@ def save_df_jobs(new_df: pd.DataFrame) -> None:
     Loads the df_jobs and gather to the previouly scrapped
     """
     try:
-        job_df_old = pickle.load(open('../Data/df_jobs.p', 'rb'))
+        job_df_old = pickle.load(open('./Data/df_jobs.p', 'rb'))
         # append the old list, most recent on top
         job_df_augmented = job_df_old.append(new_df).drop_duplicates()
         # if absent job functions are added --> NaN becomes 0
         job_df_augmented.fillna(value=0, inplace=True)
         job_df_augmented = job_df_augmented.astype(np.int16, errors='ignore')
         job_df_augmented.reset_index(drop=True, inplace=True)
-        pickle.dump(job_df_augmented, open('../Data/df_jobs.p', 'wb'))
+        pickle.dump(job_df_augmented, open('./Data/df_jobs.p', 'wb'))
     except FileNotFoundError:
         pickle.dump(new_df, open('../Data/df_jobs.p', 'wb'))
 
