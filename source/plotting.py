@@ -75,7 +75,7 @@ def draw_canton_and_bubble_chart(job_function, df_count_city, df_count_canton,
 
     # bubble map plot - cities
     fig_bubble = go.Scattermapbox(lon=df_count_city['lon'],
-                                  lat=df_count_city['lat'],
+                                  lat=df_count_city['lat'], mode='markers',
                                   text=df_count_city['municipality'] + '<br>' + df_count_city[job_function].astype(str),
                                   hovertemplate='%{text} jobs<extra></extra>',
                                   marker=dict(

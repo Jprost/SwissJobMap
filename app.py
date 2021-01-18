@@ -1,14 +1,16 @@
 import pickle
-from source.charts_manager import ChartsManager
+import pandas as pd
+from source.charts_manager import ChartsManager, city_canton_jobs
 from source.plotting import draw_canton_and_bubble_chart, draw_pie_chart, draw_bar_charts
 
 # Loads dataframes
 DATA_DIR = './Data/'
-df_count_city = pickle.load(open(DATA_DIR +'/df_city_count.p', 'rb')).sort_values('municipality')
-df_count_canton = pickle.load(open(DATA_DIR +'/df_canton_count.p', 'rb'))
+df_city_coordinates = pd.read_csv(DATA_DIR + 'df_city_coordinates.csv')
+df_canton_naming = pd.read_csv(DATA_DIR +'canton_naming.csv', index_col='Idx')
 df_jobs = pickle.load(open(DATA_DIR +'/df_jobs.p', 'rb'))
+df_count_city, df_count_canton = city_canton_jobs(df_jobs=df_jobs, city_coordinates=df_city_coordinates,
+                                                 job_function=False, canton_naming=df_canton_naming)
 
-# --- Plotting
 bar_plot_height = 150
 scale_bubble = 1 #800 / df_count_city['All Jobs'].max()
 job_function = 'All Jobs'
@@ -23,7 +25,7 @@ fig_Canton_bar, fig_city_bar = draw_bar_charts(df_count_city, df_count_canton, j
 selected_button_style = {'border-color': '#e14c4e', 'background-color': '#dc1e14', 'color': '#FFFFFF', 'border-width': '2px'}
 unselected_button_style = {}
 
-job_map_app = ChartsManager(df_jobs,df_count_city, df_count_canton,
+job_map_app = ChartsManager(df_jobs, df_city_coordinates, df_canton_naming,
                 fig_map, fig_pie, fig_Canton_bar, fig_city_bar,
                 selected_button_style, unselected_button_style)
 
@@ -32,4 +34,4 @@ del df_count_city, df_count_canton, df_jobs
 server = job_map_app.app.server
 
 if __name__ == '__main__':
-    job_map_app.app.run_server(debug=True)
+    job_map_app.app.run_server(debug=False)
